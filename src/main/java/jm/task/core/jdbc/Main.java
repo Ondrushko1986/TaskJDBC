@@ -35,8 +35,8 @@ Main {
 
         System.out.println(service.getAllUsers().toString());
 
-        service.cleanUsersTable();
-        service.dropUsersTable();
+//        service.cleanUsersTable();
+//        service.dropUsersTable();
 
 
     }

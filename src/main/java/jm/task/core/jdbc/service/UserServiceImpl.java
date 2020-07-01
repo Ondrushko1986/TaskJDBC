@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.service;
 
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 
@@ -9,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
+import static jm.task.core.jdbc.util.Util.getSessionFactory;
+
 public class UserServiceImpl implements UserService {
 
     public UserServiceImpl() {
@@ -17,6 +20,11 @@ public class UserServiceImpl implements UserService {
     private static UserDaoJDBCImpl getUserDaoJDBCImpl() {
         return new UserDaoJDBCImpl(getMysqlConnection());
     }
+
+    private static UserDaoHibernateImpl getUserDaoHibernateImpl() {
+        return new UserDaoHibernateImpl(getSessionFactory());
+    }
+
 
     private static Connection getMysqlConnection() {
         try {
@@ -46,31 +54,31 @@ public class UserServiceImpl implements UserService {
 
 
     public void createUsersTable() throws SQLException {
-        UserDaoJDBCImpl dao = getUserDaoJDBCImpl();
+        UserDaoHibernateImpl dao = getUserDaoHibernateImpl();
         dao.createUsersTable();
     }
 
     public void dropUsersTable() throws SQLException {
-        UserDaoJDBCImpl dao = getUserDaoJDBCImpl();
+        UserDaoHibernateImpl dao = getUserDaoHibernateImpl();
         dao.dropUsersTable();
     }
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
-        UserDaoJDBCImpl dao = getUserDaoJDBCImpl();
+        UserDaoHibernateImpl dao = getUserDaoHibernateImpl();
         dao.saveUser(name,lastName,age);
     }
 
     public void removeUserById(long id) throws SQLException {
-        UserDaoJDBCImpl dao = getUserDaoJDBCImpl();
+        UserDaoHibernateImpl dao = getUserDaoHibernateImpl();
         dao.removeUserById(id);
     }
 
     public List<User> getAllUsers() throws SQLException {
-        return getUserDaoJDBCImpl().getAllUsers();
+        return getUserDaoHibernateImpl().getAllUsers();
     }
 
     public void cleanUsersTable() throws SQLException {
-        UserDaoJDBCImpl dao = getUserDaoJDBCImpl();
+        UserDaoHibernateImpl dao = getUserDaoHibernateImpl();
         dao.cleanUsersTable();
     }
 }
