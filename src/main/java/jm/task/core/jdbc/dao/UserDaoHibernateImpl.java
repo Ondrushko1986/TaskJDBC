@@ -28,9 +28,9 @@ public class UserDaoHibernateImpl implements UserDao {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.createSQLQuery("create table if not exists hibernate_task_users " +
-                "(id bigint auto_increment, " +
+                "(id bigint auto_increment,  primary key (id)" +
                 "name varchar(256), lastName varchar(256)," +
-                " age tinyint, primary key (id))");
+                "age tinyint)");
         transaction.commit();
         session.close();
     }
@@ -72,7 +72,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public List getAllUsers() {
         session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List users = session.createSQLQuery("FROM hibernate_task_users").list();
+        List users = session.createSQLQuery("SELECT * FROM hibernate_task_users").list();
         transaction.commit();
         session.close();
         return users;
